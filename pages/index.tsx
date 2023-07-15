@@ -46,7 +46,18 @@ export default function Home() {
   };
   
 
- 
+  function copyToClipboard() {
+    const textToCopy = 'Hello, World!'; // Text to be copied
+
+    navigator.clipboard.writeText(tradeMessage)
+      .then(() => {
+       // setCopySuccess(true);
+        console.log('Copied to clipboard:', tradeMessage);
+      })
+      .catch((error) => {
+        console.error('Copy to clipboard failed:', error);
+      });
+  }
    
   
     const selectContractType = (event:any) => {
