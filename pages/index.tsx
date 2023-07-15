@@ -1,118 +1,240 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import React, { useState } from 'react';
+
+
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const inter = Inter({ subsets: ['latin'] })
 
+
+
 export default function Home() {
+ 
+  const [contractType, setContractType] = useState('');
+
+  const [symbol, setSymbol] = useState('');
+  const [currency, setCurrency] = useState('');
+  const [payoutType, setpayoutType] = useState('');
+  const [durationUnit,  setDurationUnit] = useState('');
+  const [amount,  setAmount] = useState('');
+  const [time,  setTime] = useState('');
+
+  const [tradeMessage,  setMessage] = useState('');
+
+  const [open, setOpen] = React.useState(false);
+ 
+  const handleClose = () => setOpen(false);
+
+
+
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'purple',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  
+
+ 
+   
+  
+    const selectContractType = (event:any) => {
+      setContractType(event.target.value);
+    };
+
+    const selectSymbol = (event:any) => {
+      setSymbol(event.target.value);
+    };
+
+    const selectCurrency = (event:any) => {
+      setCurrency(event.target.value);
+    };
+
+    const selectPayoutType = (event:any) => {
+      setpayoutType(event.target.value);
+    };
+
+    const selectDurationUnit = (event:any) => {
+      setDurationUnit(event.target.value);
+    };
+
+    const selectAmount = (event:any) => {
+      setAmount(event.target.value);
+    };
+
+    const selectTime = (event:any) => {
+      setTime(event.target.value);
+    };
+
+    const showTradeMessage = (event:any) => {
+      event.preventDefault();
+
+      var m = "Contract-deriv     \n"+'['+JSON.stringify(contractType) +','+ JSON.stringify(symbol)+','+ (Number(time))+','+ JSON.stringify(currency) +','+ (Number(amount))+',' + JSON.stringify(payoutType)+','+ JSON.stringify(durationUnit)+']';
+
+      setMessage(m)
+
+      
+     setOpen(true);
+     
+    };
+
+
+
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+    <>
+     <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            <Typography id="transition-modal-title" variant="h6" component="h2" className="text-white">
+             Copy The text below 
+            </Typography>
+            <Typography id="transition-modal-description" sx={{ mt: 2 }} className="text-white">
+           
+
+            <span className="text-yellow-300">{tradeMessage}</span> 
+
+             <br></br>
+
+             <button className="bg-white text-black p-2 border-xl mt-6 hover:shadow-xl hover:ml-2">Copy Text</button>
+            </Typography>
+          </Box>
+        </Fade>
+      </Modal>
+
+    
+        <main
+      className={`flex min-h-screen w-screen  flex-col items-center justify-between p-24 ${inter.className}`}
     >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+
+
+      <div className="lg:w-1/3 sm:w-screen">
+
+      <form onSubmit={showTradeMessage}>
+
+      <label htmlFor="selectOption">Contract Type:</label>
+      <br></br>
+      <select id="selectOption" value={contractType} onChange={selectContractType} className="w-full bg-black text-white mt-2 border-2 border-white p-2 rounded-sm text-xs">
+      
+        <option value="CALL">CALL</option>
+        <option value="PUT">PUT</option>
+       
+      </select>
+
+      <br></br><br></br>
+      <label htmlFor="selectOption" className="mt-10">Symbol:</label>
+      <br></br>
+      <select id="selectOption" value={contractType} onChange={selectSymbol} className="w-full bg-black text-white mt-2 border-2 border-white p-2 rounded-sm text-xs">
+      
+      <option value="frxEURUSD">frxEURUSD</option>
+      <option value="frxAUDUSD">frxAUDUSD</option>
+      <option value="frxGBPUSD">frxGBPUSD</option>
+      <option value="frxUSDJPY">frxUSDJPY</option>
+      <option value="frxUSDCHF">frxUSDCHF</option>
+      <option value="frxUSDCAD">frxUSDCAD</option>
+      <option value="frxNZDUSD">frxNZDUSD</option>
+      <option value="frxEURGBP">frxEURGBP</option>
+      <option value="frxEURJPY">frxEURJPY</option>
+      <option value="frxAUDCAD">frxAUDCAD</option>
+      <option value="frxGBPJPY">frxGBPJPY</option>
+      <option value="frxAUDJPY">frxAUDJPY</option>
+      <option value="frxEURAUD">frxEURAUD</option>
+      <option value="frxEURCAD">frxEURCAD</option>
+      <option value="frxNZDJPY">frxNZDJPY</option>
+
+
+
+        
+       
+      </select>
+      <br></br><br></br>
+
+      <label htmlFor="selectOption">Currency:</label>
+      <br></br>
+      <select id="selectOption" value={contractType} onChange={selectCurrency} className="w-full bg-black text-white mt-2 border-2 border-white p-2 rounded-sm text-xs">
+      
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+        <option value="AUD">AUD</option>
+       
+      </select>
+
+
+      <br></br><br></br>
+
+<label htmlFor="selectOption">Payout Type:</label>
+<br></br>
+<select id="selectOption" value={contractType} onChange={selectPayoutType} className="w-full bg-black text-white mt-2 border-2 border-white p-2 rounded-sm text-xs">
+
+  <option value="stake">Stake</option>
+  <option value="payout">Payout</option>
+
+ 
+</select>
+
+
+<br></br><br></br>
+
+<label htmlFor="selectOption">Duration Unit:</label>
+<br></br>
+<select id="selectOption" value={contractType} onChange={selectDurationUnit} className="w-full bg-black text-white mt-2 border-2 border-white p-2 rounded-sm text-xs">
+
+  <option value="s">s</option>
+  <option value="m">m</option>
+  <option value="h">h</option>
+  <option value="d">d</option>
+
+ 
+</select>
+
+<br></br><br></br>
+<label htmlFor="selectOption">Amount:</label>
+<br></br>
+
+<input type="text" placeholder='amount' onChange={selectAmount} className='border-2 border-white bg-transparent text-white p-2 w-full text-xs' />
+
+
+
+<br></br><br></br>
+
+<label htmlFor="selectOption">Time:</label>
+<br></br>
+
+<input type="text" placeholder='time' onChange={selectTime} className='border-2 border-white bg-transparent text-white p-2 w-full text-xs' />
+     
+<input type="submit"  className="mt-4 bg-lime-600 w-full py-2 cursor-pointer hover:border-2 hover:border-lime-600 hover:bg-transparent"/>
+
+
+</form>
+
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    
     </main>
+    </>
   )
 }
