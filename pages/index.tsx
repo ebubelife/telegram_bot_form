@@ -16,12 +16,12 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
  
-  const [contractType, setContractType] = useState('');
+  const [contractType, setContractType] = useState('CALL');
 
-  const [symbol, setSymbol] = useState('');
-  const [currency, setCurrency] = useState('');
-  const [payoutType, setpayoutType] = useState('');
-  const [durationUnit,  setDurationUnit] = useState('');
+  const [symbol, setSymbol] = useState('frxEURUSD');
+  const [currency, setCurrency] = useState('USD');
+  const [payoutType, setpayoutType] = useState('stake');
+  const [durationUnit,  setDurationUnit] = useState('s');
   const [amount,  setAmount] = useState('');
   const [time,  setTime] = useState('');
 
