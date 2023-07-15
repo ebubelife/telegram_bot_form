@@ -47,11 +47,12 @@ export default function Home() {
   
 
   function copyToClipboard() {
-    const textToCopy = 'Hello, World!'; // Text to be copied
+    //const textToCopy = 'Hello, World!'; // Text to be copied
 
     navigator.clipboard.writeText(tradeMessage)
       .then(() => {
        // setCopySuccess(true);
+       alert("Text copied to clipboard!")
         console.log('Copied to clipboard:', tradeMessage);
       })
       .catch((error) => {
@@ -93,7 +94,9 @@ export default function Home() {
 
       var m = "Contract-deriv     \n"+'['+JSON.stringify(contractType) +','+ JSON.stringify(symbol)+','+ (Number(time))+','+ JSON.stringify(currency) +','+ (Number(amount))+',' + JSON.stringify(payoutType)+','+ JSON.stringify(durationUnit)+']';
 
-      setMessage(m)
+      setMessage(m);
+
+      copyToClipboard();
 
       
      setOpen(true);
