@@ -96,7 +96,7 @@ export default function Home() {
 
       setMessage(m);
 
-      copyToClipboard();
+      
 
       
      setOpen(true);
@@ -133,7 +133,7 @@ export default function Home() {
 
              <br></br>
 
-             <button className="bg-white text-black p-2 border-xl mt-6 hover:shadow-xl hover:ml-2">Copy Text</button>
+             <button onClick={copyToClipboard()} className="bg-white text-black p-2 border-xl mt-6 hover:shadow-xl hover:ml-2">Copy Text</button>
             </Typography>
           </Box>
         </Fade>
